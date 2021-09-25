@@ -1,0 +1,30 @@
+{% extends "layout.html" %}
+{% load static %}
+
+{% block content %}
+{% if foodstore %}
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>Name of the story</th>
+      <th>Quantity</th>
+      <th>Distance</th>
+    </tr>
+  </thead>
+  <div>
+    <tbody id=items-filter style="text-transform:capitalize;">
+      {% for items in foodstore %}
+      <tr>
+        <td>{{ items.title}}</td>
+        <td>{{ items.quantity }}</td>
+        <td>{{ items.distance }} {{ items.meter }}</td>
+      </tr>
+      {% endfor %}
+    </tbody> 
+  </div>
+</table> 
+{% else %}
+<p>No store found.</p>
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,68 @@
+
+{% extends "layout.html" %}
+{% load static %}
+{% block content %}
+
+<form method="POST" action="{% url 'spa_app:filtering' %}" id="filtering-form">
+  {% csrf_token %}
+  <select name="Select a column for filtering" id="Select a column for filtering">
+    <option >Select a column for filtering</option>
+    <option value="title">Name of the story</option>
+    <option value="quantity">Quantity</option>
+    <option value="distance">Distance</option>
+  </select>
+  <select name="Choose condition" id="Choose condition">
+    <option>Choose condition</option>
+    <option value="equal">equal</option>
+    <option value="contains"> contains</option>
+    <option value="greater">greater </option>
+    <option value="less">less</option>
+  </select>
+  <input class="" type="text" name="search" id="search">
+  <input type='submit' value='Find' >
+</form><br>
+<div id="items-pagination-output" >
+<table class="table table-bordered" >
+  <thead>
+    <tr>
+      <th>Name of the story</th>
+      <th>Quantity</th>
+      <th>Distance</th>
+    </tr>
+  </thead>
+    <tbody id="items-list" style="text-transform:capitalize;">
+      {% for items in page_obj_list %}
+      <tr>
+        <td>{{ items.title}}</td>
+        <td>{{ items.quantity }}</td>
+        <td>{{ items.distance }} {{ items.meter }}</td>
+      </tr>
+      {% endfor %}
+    </tbody> 
+</table> 
+
+
+<nav aria-label="Page navigation example">
+  <ul class="pagination">
+    {% for items in pagerange %}
+      <li class="page-item "><a class="page-link" href="?page={{ items }}">{{ items }}</a></li>  
+    {% endfor %}
+  </ul> 
+</nav>
+</div>
+
+<div id="items-data" style="display:none;">
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>Name of the story</th>
+      <th>Quantity</th>
+      <th>Distance</th>
+    </tr>
+  </thead>
+    <tbody id="items-filter" style="text-transform:capitalize;">
+    </tbody> 
+</table> 
+</div>
+
+{% endblock %}
